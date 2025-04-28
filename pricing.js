@@ -1,6 +1,5 @@
-// pricing.js — Clean Final Version (KamilArtem)
+// pricing.js - Final final version (correct and safe)
 
-// Update prices dynamically
 function updatePrices(planType = 'monthly', currency = 'usd') {
     if (typeof pricingObject === 'undefined') {
         console.error('pricingObject not found!');
@@ -20,9 +19,10 @@ function updatePrices(planType = 'monthly', currency = 'usd') {
     });
 }
 
-// Update period label (/month, /year, or empty)
 function updatePeriodLabel(planType) {
+    console.log('Updating label for planType:', planType); // debug
     document.querySelectorAll('.price-time').forEach(function(label) {
+        console.log('Found price-time element:', label); // debug
         if (!label) return;
 
         if (planType === 'monthly') {
@@ -30,18 +30,16 @@ function updatePeriodLabel(planType) {
         } else if (planType === 'yearly') {
             label.innerText = '/year';
         } else if (planType === 'successFee') {
-            label.innerText = ''; // Empty for success fee
+            label.innerText = '';
         }
     });
 }
 
-// When page loads, set default values
 document.addEventListener('DOMContentLoaded', function() {
-    updatePrices('monthly', 'usd'); 
-    updatePeriodLabel('monthly');  
+    updatePrices('monthly', 'usd');
+    updatePeriodLabel('monthly');
 });
 
-// Handle button clicks
 const monthlyBtn = document.getElementById('switch-to-monthly');
 const yearlyBtn = document.getElementById('switch-to-yearly');
 const successBtn = document.getElementById('switch-to-success');
