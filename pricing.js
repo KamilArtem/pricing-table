@@ -1,6 +1,5 @@
-// pricing.js — Final Version for KamilArtem
+// pricing.js — Final version
 
-// Update the main prices
 function updatePrices(planType = 'monthly', currency = 'usd') {
     if (typeof pricingObject === 'undefined') {
         console.error('pricingObject not found!');
@@ -8,19 +7,19 @@ function updatePrices(planType = 'monthly', currency = 'usd') {
     }
 
     document.querySelectorAll('[data-plan]').forEach(function(el) {
-        const plan = el.getAttribute('data-plan'); // basic, pro, enterprise
+        const plan = el.getAttribute('data-plan');
         const price = pricingObject[planType][plan][currency];
         const symbol = pricingObject.currency[currency];
 
         if (typeof price === 'number') {
             el.textContent = symbol + price;
         } else {
-            el.textContent = price; // For "Get Offer"
+            el.textContent = price;
         }
     });
 }
 
-// Update the period label ("month", "year", or empty)
+// NEW FUNCTION to update period label
 function updatePeriodLabel(planType) {
     document.querySelectorAll('[wf-text-monthly]').forEach(function(label) {
         const monthlyText = label.getAttribute('wf-text-monthly');
@@ -31,18 +30,16 @@ function updatePeriodLabel(planType) {
         } else if (planType === 'yearly') {
             label.textContent = yearlyText;
         } else if (planType === 'successFee') {
-            label.textContent = ''; // Hide label
+            label.textContent = '';
         }
     });
 }
 
-// Default load when page opens
 document.addEventListener('DOMContentLoaded', function() {
-    updatePrices('monthly', 'usd');
-    updatePeriodLabel('monthly');
+    updatePrices('monthly', 'usd'); 
+    updatePeriodLabel('monthly');  // << Make sure default text appears
 });
 
-// Set up button actions
 const monthlyBtn = document.getElementById('switch-to-monthly');
 const yearlyBtn = document.getElementById('switch-to-yearly');
 const successBtn = document.getElementById('switch-to-success');
@@ -53,18 +50,15 @@ if (monthlyBtn) {
         updatePeriodLabel('monthly');
     });
 }
-
 if (yearlyBtn) {
     yearlyBtn.addEventListener('click', function() {
         updatePrices('yearly', 'usd');
         updatePeriodLabel('yearly');
     });
 }
-
 if (successBtn) {
     successBtn.addEventListener('click', function() {
         updatePrices('successFee', 'usd');
         updatePeriodLabel('successFee');
     });
 }
-
